@@ -1,7 +1,10 @@
 <script>
   import { onMount } from "svelte";
+  import { toast_data } from "../lib/writable/toast";
 
   let is_pop_up = true;
+
+  setTimeout(()=>$toast_data.show = true, 500);
 
   onMount(()=>{
     var observer = new IntersectionObserver(entries=>{

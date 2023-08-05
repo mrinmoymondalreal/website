@@ -1,6 +1,7 @@
 <script>
   import { onMount } from "svelte";
   import { writable } from "svelte/store";
+    import { toast_data } from "../writable/toast";
 
   let header;
   let header_wrapper;
@@ -152,7 +153,11 @@
       <div class="mt-2">
         <form action="?hfbhj">
           <textarea type="text" class="w-full rounded-md h-36 border-2 border-black px-2 py-2" placeholder="Write your message" name="" id=""></textarea>
-          <button type="button"class="w-full rounded-md bg-black text-white px-2 py-2" placeholder="Write your message" name="" id="">Submit</button>
+          <button on:click={()=>{
+            $is_contact_menu = !$is_contact_menu;
+            $toast_data.show = true;
+            $toast_data.message = "Message sent successfully.";
+          }} type="button"class="w-full rounded-md bg-black text-white px-2 py-2" placeholder="Write your message" name="" id="">Submit</button>
         </form>
       </div>
     </div>
