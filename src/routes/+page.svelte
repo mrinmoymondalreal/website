@@ -97,7 +97,7 @@
     </p>
     <button on:click={()=>{
       document.querySelector(".about").click();
-    }} type="button" class="bg-gray-600 px-4 py-2 text-white shadow-sm rounded-md mt-4"><a href="/">Know More &#10132;</a></button>
+    }} type="button" class="bg-gray-600 px-4 py-2 text-white shadow-sm rounded-md mt-4"><a href="#">Know More &#10132;</a></button>
   </div>
 </div>
 
@@ -129,7 +129,7 @@
 <div class="contact-btn-holder w-full flex justify-center items-center h-24">
   <button type="button" on:click={()=>{
     document.querySelector('.contact').click();
-  }} class="w-36 h-12 bg-gray-600 text-white shadow-md rounded-md"><a href="/">Get In Touch</a></button>
+  }} class="w-36 h-12 bg-gray-600 text-white shadow-md rounded-md">Get In Touch</button>
 </div>
 
 <footer class="flex justify-center items-center h-36 bg-gray-900 space-y-4 flex-col">

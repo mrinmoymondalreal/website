@@ -288,7 +288,7 @@
     <div class="name flex-1 md:flex-none flex justify-center">Mrinmoy Mondal</div>
     <div class="middle-menu hidden md:flex justify-center flex-1">
       <ul class="flex space-x-4">
-        <li><a class="hover:underline" href="/">Home</a></li>
+        <li><a class="hover:underline" href="#">Home</a></li>
         <li><button on:click={()=>{
             is_main_menu.set(false);
             is_contact_menu.set(!$is_contact_menu);
