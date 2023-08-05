@@ -119,8 +119,8 @@
       <div class="work
       hidden_s opacity-50 -translate-x-1/2
       md:hover:px-28 pointer-events-none" animate-class="x-slide" style="--delay: {index*100}ms;">
-        <div class="w-[calc(40vh*0.8007)] h-[40vh] bg-cover rounded-lg shadow-lg pointer-events-auto"
-        style="background-image: url('/src/lib/images/img%20({index+1}).png')"></div>
+        <div class="w-[calc(40vh*0.8007)] h-[40vh] bg-cover rounded-lg shadow-lg pointer-events-auto bg-gray-800"
+        style=""></div>
       </div>
     {/each}
   </div>
