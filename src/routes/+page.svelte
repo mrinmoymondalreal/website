@@ -29,17 +29,6 @@
 
 <div class="hidden slide-left slide-right x-slide right-slide"></div>
 
-<!-- {#if is_pop_up}
-<div on:click={()=>{
-  is_pop_up = !is_pop_up
-}} class="popup w-full h-full fixed z-[9999] bg-black bg-opacity-40 top-0 flex justify-center items-center">
-  <div class="pop-wrapper w-[80%] h-64 p-4 bg-white rounded-md justify-center flex items-center">
-    
-    The Website is still under contructions. Click to dismiss this Popup
-  </div>
-</div>
-{/if} -->
-
 <div class="first-screen h-screen w-full -mt-8 md:mt-0 flex justify-center items-center gap-y-12 md:gap-y-0 md:gap-x-12 flex-col md:flex-row-reverse">
   <div class="image right-wrapper mt-12">
     <div class="image h-56 w-56 rounded-full bg-black">
@@ -119,7 +108,7 @@
       <div class="work
       hidden_s opacity-50 -translate-x-1/2
       md:hover:px-28 pointer-events-none" animate-class="x-slide" style="--delay: {index*100}ms;">
-        <div class="w-[calc(40vh*0.8007)] h-[40vh] bg-cover rounded-lg shadow-lg pointer-events-auto bg-gray-800"
+        <div class="w-[calc(40vh*0.8007)] h-[40vh] border-2 border-white bg-cover rounded-lg shadow-lg pointer-events-auto bg-gray-800"
         style=""></div>
       </div>
     {/each}
