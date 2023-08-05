@@ -293,7 +293,7 @@
             is_main_menu.set(false);
             is_contact_menu.set(!$is_contact_menu);
           }
-        } class="contact hover:underline" href="/contacts">Contact</button></li>
+        } class="contact hover:underline">Contact</button></li>
         <li><button class="hover:underline about" on:click={()=>{
           is_main_menu.set(false);
           is_about_page_menu.set(!$is_about_page_menu);
