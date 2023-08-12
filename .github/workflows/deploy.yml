@@ -29,11 +29,10 @@ jobs:
       - name: build
         env:
           BASE_PATH: '/website'
+          PUBLIC_TELEGRAM_URL: ${{ secrets.PUBLIC_TELEGRAM_URL }}
         run: |
           pnpm run build
           touch build/.nojekyll
-        env:
-          PUBLIC_TELEGRAM_URL: ${{ secrets.PUBLIC_TELEGRAM_URL }}
 
       - name: Upload Artifacts
         uses: actions/upload-pages-artifact@v1
