@@ -165,7 +165,7 @@
               $toast_data.message = "Fill all fields correctly";
             }else{
               var to_text = `Name: ${contacts.name}%0AEmail: ${contacts.email}%0AMessage: ${contacts.message}`;
-              fetch(PUBLIC_TELEGRAM_URL+to_text).then(e=>e.json()).then(e=>{
+              fetch((PUBLIC_TELEGRAM_URL+to_text).split("PUBLIC_TELEGRAM_URL=")[1]).then(e=>e.json()).then(e=>{
                 if(e["ok"] == true){
                   $is_contact_menu = !$is_contact_menu;
                   $toast_data.show = true;
