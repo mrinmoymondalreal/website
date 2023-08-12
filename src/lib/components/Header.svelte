@@ -163,22 +163,23 @@
             if(Object.values(contacts).map(e=>e.trim()).length != 3 || Object.values(contacts).map(e=>e.trim()).includes("")){
               $toast_data.show = true;
               $toast_data.message = "Fill all fields correctly";
+            }else{
+              var to_text = `Name: ${contacts.name}%0AEmail: ${contacts.email}%0AMessage: ${contacts.message}`;
+              fetch(PUBLIC_TELEGRAM_URL+to_text).then(e=>e.json()).then(e=>{
+                if(e["ok"] == true){
+                  $is_contact_menu = !$is_contact_menu;
+                  $toast_data.show = true;
+                  $toast_data.message = "Message Sent Successfully.";
+  
+                  contacts["name"] = "";
+                  contacts["email"] = "";
+                  contacts["message"] = "";
+                }else{
+                  $toast_data.show = true;
+                  $toast_data.message = "Unexpected Problem Occured.";
+                }
+              })
             }
-            var to_text = `Name: ${contacts.name}%0AEmail: ${contacts.email}%0AMessage: ${contacts.message}`;
-            fetch(PUBLIC_TELEGRAM_URL+to_text).then(e=>e.json()).then(e=>{
-              if(e["ok"] == true){
-                $is_contact_menu = !$is_contact_menu;
-                $toast_data.show = true;
-                $toast_data.message = "Message Sent Successfully.";
-
-                contacts["name"] = "";
-                contacts["email"] = "";
-                contacts["message"] = "";
-              }else{
-                $toast_data.show = true;
-                $toast_data.message = "Unexpected Problem Occured.";
-              }
-            })
             
           }} type="button"class="w-full rounded-md bg-black text-white px-2 py-2" placeholder="Write your message" name="" id="">Submit</button>
         </form>
