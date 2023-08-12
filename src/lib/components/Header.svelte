@@ -1,7 +1,8 @@
 <script>
   import { onMount } from "svelte";
   import { writable } from "svelte/store";
-    import { toast_data } from "../writable/toast";
+  import { toast_data } from "$lib/writable/toast";
+  import { PUBLIC_TELEGRAM_URL } from '$env/static/public';
 
   let header;
   let header_wrapper;
@@ -51,6 +52,8 @@
       percentage: 0.65
     },
   ];
+
+  let contacts = {};
 
 
   onMount(()=>{
@@ -151,12 +154,32 @@
     <div class="p3 px-4">
       <div class="heading text-2xl font-bold">Write to Me: </div>
       <div class="mt-2">
-        <form action="?hfbhj">
-          <textarea type="text" class="w-full rounded-md h-36 border-2 border-black px-2 py-2" placeholder="Write your message" name="" id=""></textarea>
+        <form action="?hfbhj" class="space-y-2">
+        <input bind:value={contacts.name} type="text" class="w-full rounded-md border-2 border-black px-2 py-2" placeholder="Your Name" name="" id="">
+        <input bind:value={contacts.email} type="email" class="w-full rounded-md border-2 border-black px-2 py-2" placeholder="Your Email" name="" id="">
+          <textarea bind:value={contacts.message} type="text" class="w-full rounded-md h-36 border-2 border-black px-2 py-2" placeholder="Write your message" name="" id=""></textarea>
           <button on:click={()=>{
-            $is_contact_menu = !$is_contact_menu;
-            $toast_data.show = true;
-            $toast_data.message = "Message sent successfully.";
+            console.log(Object.values(contacts).map(e=>e.trim()));
+            if(Object.values(contacts).map(e=>e.trim()).length != 3 || Object.values(contacts).map(e=>e.trim()).includes("")){
+              $toast_data.show = true;
+              $toast_data.message = "Fill all fields correctly";
+            }
+            var to_text = `Name: ${contacts.name}%0AEmail: ${contacts.email}%0AMessage: ${contacts.message}`;
+            fetch(PUBLIC_TELEGRAM_URL+to_text).then(e=>e.json()).then(e=>{
+              if(e["ok"] == true){
+                $is_contact_menu = !$is_contact_menu;
+                $toast_data.show = true;
+                $toast_data.message = "Message Sent Successfully.";
+
+                contacts["name"] = "";
+                contacts["email"] = "";
+                contacts["message"] = "";
+              }else{
+                $toast_data.show = true;
+                $toast_data.message = "Unexpected Problem Occured.";
+              }
+            })
+            
           }} type="button"class="w-full rounded-md bg-black text-white px-2 py-2" placeholder="Write your message" name="" id="">Submit</button>
         </form>
       </div>
