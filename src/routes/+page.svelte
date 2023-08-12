@@ -1,6 +1,7 @@
 <script>
   import { onMount } from "svelte";
-  import { toast_data } from "../lib/writable/toast";
+  import { toast_data } from "$lib/writable/toast";
+  import PosterTray from "$lib/components/PosterTray.svelte";
 
   let is_pop_up = true;
 
@@ -25,6 +26,14 @@
     var hiddenElements = document.querySelectorAll(".hidden_s");
     hiddenElements.forEach(element => observer.observe(element));
   });
+  // let promise = new Promise(res=>setTimeout(()=>res([2, 3, 4, 6]), 1000))
+  let array = [
+    "https://ucarecdn.com/2c054284-55a6-4ac9-a043-f87c47b6ca2c/-/preview/586x270/-/quality/smart/-/format/auto/",
+    "https://ucarecdn.com/f0140166-f721-4e9b-85ec-0566f70d5bbc/-/preview/586x270/-/quality/smart/-/format/auto/",
+    "https://ucarecdn.com/17b15956-3b6b-4e4f-ba52-f3b59ae0a72a/-/preview/586x270/-/quality/smart/-/format/auto/",
+    "https://ucarecdn.com/1f9ae40e-10e5-4869-8374-d12de7720757/-/preview/586x270/-/quality/smart/-/format/auto/",
+    "https://ucarecdn.com/8f114e80-c2cb-4078-91a8-26e4d2d926f8/-/preview/586x270/-/quality/smart/-/format/auto/"
+  ];
 </script>
 
 <div class="hidden slide-left slide-right x-slide right-slide"></div>
@@ -103,16 +112,14 @@
 
 <div class="third-page md:h-screen flex justify-center items-center flex-col gap-y-8 relative py-24 px-4">
   <div class="heading text-2xl font-bold">Sometimes I also get <span class="text-red-500">Creative</span></div>
-  <div class="work-list grid grid-cols-2 md:flex justify-center gap-y-4 md:-space-x-24 w-full overflow-hidden">
-    {#each new Array(5) as item, index}
-      <div class="work
-      hidden_s opacity-50 -translate-x-1/2
-      md:hover:px-28 pointer-events-none" animate-class="x-slide" style="--delay: {index*100}ms;">
-        <div class="w-[calc(40vh*0.8007)] h-[40vh] border-2 border-white bg-cover rounded-lg shadow-lg pointer-events-auto bg-gray-800"
-        style=""></div>
-      </div>
-    {/each}
-  </div>
+  <!-- {#await promise}
+  <p>Loading Data.....</p>
+  {:then array} -->
+    <PosterTray {array}/>
+  <!-- {:catch error}
+    <p>Something went wrong: {error.message}</p>
+  {/await} -->
+
 </div>
 
 <div class="contact-btn-holder w-full flex justify-center items-center h-24">
