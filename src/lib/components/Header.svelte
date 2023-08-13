@@ -163,9 +163,9 @@
       <div class="heading text-2xl font-bold">Write to Me: </div>
       <div class="mt-2">
         <form action="?hfbhj" class="space-y-2">
-        <input bind:value={contacts.name} type="text" class="w-full placeholder:text-black rounded-md border-2 border-black px-2 py-2" placeholder="Your Name" name="" id="">
-        <input bind:value={contacts.email} type="email" class="w-full placeholder:text-black rounded-md border-2 border-black px-2 py-2" placeholder="Your Email" name="" id="">
-          <textarea bind:value={contacts.message} type="text" class="w-full placeholder:text-black rounded-md h-36 border-2 border-black px-2 py-2" placeholder="Write your message" name="" id=""></textarea>
+        <input bind:value={contacts.name} type="text" class="w-full placeholder:text-black rounded-md border-2 border-black px-2 py-2 text-black" placeholder="Your Name" name="" id="">
+        <input bind:value={contacts.email} type="email" class="w-full placeholder:text-black rounded-md border-2 border-black px-2 py-2 text-black" placeholder="Your Email" name="" id="">
+          <textarea bind:value={contacts.message} type="text" class="w-full placeholder:text-black rounded-md h-36 border-2 border-black px-2 py-2 text-black" placeholder="Write your message" name="" id=""></textarea>
           <button on:click={()=>{
             console.log(Object.values(contacts).map(e=>e.trim()));
             if(Object.values(contacts).map(e=>e.trim()).length != 3 || Object.values(contacts).map(e=>e.trim()).includes("")){
@@ -210,7 +210,13 @@
     <div class="p1">
       <div class="heading text-2xl font-bold">About</div>
       <div class="wrapper py-4 px-2 text-md">
-        I am Mrinmoy Mondal, currently pursuing a Bachelor's degree in Computer Science and Engineering (CSE) at Surtech. I would like to take a moment to introduce myself and share a little bit about my strengths, weaknesses, hobbies, and favorite pastimes.
+        Greetings! I'm Mrinmoy Mondal, currently pursuing a Bachelor of Technology (B.Tech) degree in Computer Science and Engineering at Dr. Sudhir Chandra Sur Institute of Technology & Sports Complex, Kolkata, India. I find immense joy in the process of creation and innovation, whether it involves crafting elegant lines of code or engaging in hands-on projects.
+
+        The boundless potential of technology never ceases to amaze me, and I am on a relentless quest to explore and harness this potential in unique and meaningful ways. My enthusiasm for transforming abstract ideas into concrete realities serves as the driving force behind my continuous pursuit of knowledge and skills.
+
+        In addition to my academic endeavors, I often find myself engrossed in various artistic and creative pursuits, drawing inspiration from diverse sources. By chronicling my journey through the realm of Computer Science and Engineering, I aim to connect with like-minded individuals and contribute to the dynamic landscape of innovation.
+
+        Join me as I share my experiences, insights, and projects on this platform. Let's collaborate, innovate, and together, let's shape a future where technology knows no bounds.
       </div>
     </div>
     <div class="p2 h-fit">

@@ -11,14 +11,8 @@
   let works = [];
   
   onMount(()=>{
-    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      document.documentElement.classList.add('dark')
-      localStorage.setItem("theme", "dark");
-      isDarkMode.set(true);
-    } else {
-      localStorage.setItem("theme", "light");
-      document.documentElement.classList.remove('dark')
-    }
+    $isDarkMode = localStorage.getItem("theme") == "light" ? false : true;
+    localStorage.getItem("theme") == "light" ? document.documentElement.classList.remove('dark') : document.documentElement.classList.add('dark');
 
     let works_promise = async ()=>{
       var w1 = await fetch('https://road-brazen-flat.glitch.me/get_works');
