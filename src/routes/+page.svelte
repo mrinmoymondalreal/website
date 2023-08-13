@@ -9,10 +9,6 @@
   let is_pop_up = true;
 
   let works = [];
-
-  $: console.log(works);
-  
-  setTimeout(()=>$toast_data.show = true, 500);
   
   onMount(()=>{
     if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
