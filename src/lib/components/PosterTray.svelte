@@ -27,12 +27,14 @@
 <div class="hidden x-slide"></div>
 <div class="work-list grid grid-cols-2 md:flex justify-center gap-y-4 md:-space-x-24 w-full overflow-hidden">
   {#each array as item, index}
-    <div class="work
-    hidden_s opacity-50 -translate-x-1/2
-    md:hover:px-28 pointer-events-none" animate-class="x-slide" style="--delay: {index*100}ms;">
-      <div class="w-[calc(40vh*0.8007)] h-[40vh] border-2 border-white bg-cover rounded-lg shadow-lg pointer-events-auto bg-gray-800"
-      style="background: url('{item}');background-size: cover;"></div>
-    </div>
+    <a href="https://www.instagram.com/mrin_arts/" target="_blank">
+      <div class="work
+      hidden_s opacity-50 -translate-x-1/2
+      md:hover:px-28 pointer-events-none" animate-class="x-slide" style="--delay: {index*100}ms;">
+        <div class="w-[calc(40vh*0.8007)] h-[40vh] border-2 border-white bg-cover rounded-lg shadow-lg pointer-events-auto bg-gray-800"
+        style="background: url('{item}');background-size: cover;"></div>
+      </div>
+    </a>
   {/each}
 </div>
 

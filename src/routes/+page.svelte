@@ -2,12 +2,24 @@
   import { onMount } from "svelte";
   import { toast_data } from "$lib/writable/toast";
   import PosterTray from "$lib/components/PosterTray.svelte";
+  import profile_picture from "$lib/images/profile_picture.jpg";
+  import name_logo from "$lib/images/name_logo.png";
 
   let is_pop_up = true;
 
-  setTimeout(()=>$toast_data.show = true, 500);
+  let works = [];
 
+  $: console.log(works);
+  
+  setTimeout(()=>$toast_data.show = true, 500);
+  
   onMount(()=>{
+    let works_promise = async ()=>{
+      var w1 = await fetch('https://road-brazen-flat.glitch.me/get_works');
+      works =( await w1.json()).data;
+    }
+  
+    works_promise();
     var observer = new IntersectionObserver(entries=>{
       entries.forEach(entry=>{
         try{
@@ -26,6 +38,25 @@
     var hiddenElements = document.querySelectorAll(".hidden_s");
     hiddenElements.forEach(element => observer.observe(element));
   });
+  function refreshList(){
+    var observer = new IntersectionObserver(entries=>{
+      entries.forEach(entry=>{
+        try{
+          var element = entry.target;
+          var attr = element.getAttribute('animate-class');
+          if(entry.isIntersecting){
+            element.classList.add(attr);
+          }else{
+            element.classList.remove(attr);
+          }
+        }catch(err){}
+      })
+    }, {
+      threshold: 0.2
+    });
+    var hiddenElements = document.querySelectorAll(".hidden_s");
+    hiddenElements.forEach(element => observer.observe(element));
+  }
   // let promise = new Promise(res=>setTimeout(()=>res([2, 3, 4, 6]), 1000))
   let array = [
     "https://ucarecdn.com/2c054284-55a6-4ac9-a043-f87c47b6ca2c/-/preview/586x270/-/quality/smart/-/format/auto/",
@@ -39,8 +70,8 @@
 <div class="hidden slide-left slide-right x-slide right-slide"></div>
 
 <div class="first-screen h-screen w-full -mt-8 md:mt-0 flex justify-center items-center gap-y-12 md:gap-y-0 md:gap-x-12 flex-col md:flex-row-reverse">
-  <div class="image right-wrapper mt-12">
-    <div class="image h-56 w-56 rounded-full bg-black">
+  <div class="image right-wrapper">
+    <div class="image h-64 w-64 rounded-full bg-blac bg-cover" style="background-image: url('{name_logo}');">
     </div>
   </div>
   <div class="info text-center box-border left-wrapper flex flex-col items-center">
@@ -49,12 +80,20 @@
     </div>
     <div class="md:mt-4 -space-y-4" style="--delay: 155ms">
       <div class="font-bold text-3xl md:inline-block font-['Borel']">I am </div>
-      <svg class="w-72 md:w-96 md:inline-block text-red-600" viewBox="0 0 540 100" xmlns="http://www.w3.org/2000/svg">
+      <svg class="w-72 md:w-96 md:inline-block" viewBox="0 0 540 100" xmlns="http://www.w3.org/2000/svg">
+
+        <defs>
+          <linearGradient id="gradient">
+            <stop offset="0%" stop-color="#ec4899" />
+            <stop offset="100%" stop-color="#7b15e8" />
+          </linearGradient>
+        </defs>
+      
         <style>
           .heavy {
             stroke-width: 0;
-            stroke: currentColor;
-            fill: currentColor;
+            /* stroke: currentColor; */
+            /* fill: currentColor; */
             stroke-dashoffset: 0;
             stroke-dasharray: 900;
             font: bold 60px 'Borel', cursive;
@@ -87,7 +126,7 @@
             }
           }
         </style>
-        <text x="0" y="65" class="heavy">Mrinmoy Mondal</text>
+        <text stroke="url(#gradient)" fill="url(#gradient)" x="0" y="65" class="heavy">Mrinmoy Mondal</text>
       </svg>
     </div>
     <p class="text-lg px-8 md:w-[70%] mt-2" style="--delay: 256ms">Currently Pursuing B.Tech in CSE at <a href="https://www.surtech.edu.in/" class="underline" target="_blank" rel="noopener noreferrer">DSCSITSC</a>.
@@ -103,23 +142,30 @@
 <div class="second-screen h-fit lg:h-screen flex justify-center items-center flex-col gap-y-8 relative py-24 px-4 overflow-hidden">
   <div class="heading text-2xl font-bold">Some of my <span class="text-red-500">Works</span>...</div>
   <div class="work-list flex flex-wrap item-center justify-center gap-4 h-fit">
-    {#each new Array(5).fill(0).map(e=>Math.random()*100) as item, index}
-      <div class="work md:w-[calc(30vh*1.7777777778)] md:h-[30vh] w-[calc(23vh*1.7777777778)] h-[23vh] bg-gray-700 rounded-lg
-      hidden_s {index%2 == 0 ? "-translate-x-1/2" : "translate-x-1/2"}" animate-class="x-slide" style="--delay: {index*100}ms;">{item} - {index}</div>
-    {/each}
+
+      {#each works as item, index}
+      <div use:refreshList class="work md:w-[calc(30vh*1.7777777778)] md:h-[30vh] w-[calc(23vh*1.7777777778)] h-[23vh] bg-gray-700 rounded-lg
+      hidden_s {index%2 == 0 ? "-translate-x-1/2" : "translate-x-1/2"}
+      relative overflow-hidden group bg-cover" animate-class="x-slide" style="--delay: {index*100}ms;background-image: url('{item.cover}')">
+          {#if true} {@html '<a class="w-full h-full block" target="_blank" href="'+item.link+'">'} {/if}
+            <div class="info translate-y-full transition-transform absolute bottom-0 px-4 py-2 w-full h-fit bg-gradient-to-b from-transparent to-black text-white group-hover:translate-y-0">
+              <div class="name flex w-fit items-center space-x-4">
+                <div class="act-name flex-1 font-bold">{item.name}</div>
+                <div class="is-link flex-none">
+                  <svg class="text-white" xmlns="http://www.w3.org/2000/svg" fill="currentColor" height="0.8em" viewBox="0 0 512 512">! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc.<path d="M320 0c-17.7 0-32 14.3-32 32s14.3 32 32 32h82.7L201.4 265.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L448 109.3V192c0 17.7 14.3 32 32 32s32-14.3 32-32V32c0-17.7-14.3-32-32-32H320zM80 32C35.8 32 0 67.8 0 112V432c0 44.2 35.8 80 80 80H400c44.2 0 80-35.8 80-80V320c0-17.7-14.3-32-32-32s-32 14.3-32 32V432c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V112c0-8.8 7.2-16 16-16H192c17.7 0 32-14.3 32-32s-14.3-32-32-32H80z"/></svg>
+                </div>
+              </div>
+              <div class="short-description">{item.short_description}</div>
+            </div>
+          {#if true} {@html '</a>'} {/if}
+        </div>
+      {/each}
   </div>
 </div>
 
 <div class="third-page md:h-screen flex justify-center items-center flex-col gap-y-8 relative py-24 px-4">
   <div class="heading text-2xl font-bold">Sometimes I also get <span class="text-red-500">Creative</span></div>
-  <!-- {#await promise}
-  <p>Loading Data.....</p>
-  {:then array} -->
     <PosterTray {array}/>
-  <!-- {:catch error}
-    <p>Something went wrong: {error.message}</p>
-  {/await} -->
-
 </div>
 
 <div class="contact-btn-holder w-full flex justify-center items-center h-24">
@@ -145,6 +191,10 @@
     <a target="_blank" href="https://www.linkedin.com/in/mrinmoy-mondal-319861167/" class="text-white">
       <!-- Linkden -->
       <svg xmlns="http://www.w3.org/2000/svg" height="1.5em" fill="currentColor" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+    </a>
+    <a target="_blank" href="https://www.facebook.com/mrinmoy.mandal.585/" class="text-white">
+      <!-- Facebook -->
+      <svg xmlns="http://www.w3.org/2000/svg" height="1.5em" fill="currentColor" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg>
     </a>
   </div>
   <div class="flex">
