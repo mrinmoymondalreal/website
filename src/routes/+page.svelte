@@ -4,6 +4,7 @@
   import PosterTray from "$lib/components/PosterTray.svelte";
   import profile_picture from "$lib/images/profile_picture.jpg";
   import name_logo from "$lib/images/name_logo.png";
+  import { isDarkMode } from "$lib/writable/isDarkMode";
 
   let is_pop_up = true;
 
@@ -14,6 +15,15 @@
   setTimeout(()=>$toast_data.show = true, 500);
   
   onMount(()=>{
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark')
+      localStorage.setItem("theme", "dark");
+      isDarkMode.set(true);
+    } else {
+      localStorage.setItem("theme", "light");
+      document.documentElement.classList.remove('dark')
+    }
+
     let works_promise = async ()=>{
       var w1 = await fetch('https://road-brazen-flat.glitch.me/get_works');
       works =( await w1.json()).data;
@@ -69,7 +79,8 @@
 
 <div class="hidden slide-left slide-right x-slide right-slide"></div>
 
-<div class="first-screen h-screen w-full -mt-8 md:mt-0 flex justify-center items-center gap-y-12 md:gap-y-0 md:gap-x-12 flex-col md:flex-row-reverse">
+<div class="first-screen h-screen w-full -mt-8 md:mt-0 flex justify-center items-center gap-y-12 md:gap-y-0 md:gap-x-12 flex-col md:flex-row-reverse
+            dark:bg-dark dark:text-white">
   <div class="image right-wrapper">
     <div class="image h-64 w-64 rounded-full bg-blac bg-cover" style="background-image: url('{name_logo}');">
     </div>
@@ -139,7 +150,8 @@
 </div>
 
 
-<div class="second-screen h-fit lg:h-screen flex justify-center items-center flex-col gap-y-8 relative py-24 px-4 overflow-hidden">
+<div class="second-screen h-fit lg:h-screen flex justify-center items-center flex-col gap-y-8 relative py-24 px-4 overflow-hidden
+          dark:bg-dark dark:text-white">
   <div class="heading text-2xl font-bold">Some of my <span class="text-red-500">Works</span>...</div>
   <div class="work-list flex flex-wrap item-center justify-center gap-4 h-fit">
 
@@ -163,12 +175,14 @@
   </div>
 </div>
 
-<div class="third-page md:h-screen flex justify-center items-center flex-col gap-y-8 relative py-24 px-4">
+<div class="third-page md:h-screen flex justify-center items-center flex-col gap-y-8 relative py-24 px-4
+          dark:bg-dark dark:text-white">
   <div class="heading text-2xl font-bold">Sometimes I also get <span class="text-red-500">Creative</span></div>
     <PosterTray {array}/>
 </div>
 
-<div class="contact-btn-holder w-full flex justify-center items-center h-24">
+<div class="contact-btn-holder w-full flex justify-center items-center h-24
+          dark:bg-dark dark:text-white">
   <button type="button" on:click={()=>{
     document.querySelector('.contact').click();
   }} class="w-36 h-12 bg-gray-600 text-white shadow-md rounded-md">Get In Touch</button>
